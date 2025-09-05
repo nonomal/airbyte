@@ -31,6 +31,17 @@ For a production-ready deployment of self-managed data planes, various infrastru
 | Object Storage (Optional)| Amazon S3 bucket with a directory for log storage.                                                                         |
 
 </TabItem>
+
+<TabItem value="Azure" label="Azure" default>
+
+| Component                | Recommendation                                                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kubernetes Cluster       | Azure Kubernetes Service cluster running in [2 or more availability zones](https://learn.microsoft.com/en-us/azure/aks/reliability-zone-resiliency-recommendations). |
+| External Secrets Manager | [Azure Key Vault](/platform/operator-guides/configuring-airbyte#secrets) for storing connector secrets, using a dedicated Airbyte role using a [policy with all required permissions](/platform/enterprise-setup/implementation-guide#azure-secret-manager-policy). |
+| Object Storage (Optional)| Azure Blob Storage with a directory for log storage.                                                                         |
+
+</TabItem>
+
 </Tabs>                                              
 
 A few notes on Kubernetes cluster provisioning for self-managed data planes and Airbyte Enterprise Flex:

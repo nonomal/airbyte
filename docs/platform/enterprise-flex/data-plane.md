@@ -188,12 +188,50 @@ kubectl create secret generic airbyte-config-secrets \
 ```
 
 </TabItem>
+
+<TabItem value="Azure" label="Azure" default>
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: airbyte-config-secrets
+type: Opaque
+stringData:
+
+  # Insert the data plane credentials received in step 2
+  DATA_PLANE_CLIENT_ID: your-data-plane-client-id
+  DATA_PLANE_CLIENT_SECRET: your-data-plane-client-secret
+  
+  # Only set these values if they are also set on your control plane
+  # Azure Secrets
+  azure-key-vault-client-id: ## 3fc863e9-4740-4871-bdd4-456903a04d4e
+  azure-key-vault-client-secret: ## KWP6egqixiQeQoKqFZuZq2weRbYoVxMH
+```
+
+Apply your secrets manifest in your command-line tool with `kubectl`: `kubectl apply -f <file>.yaml -n <namespace>`.
+
+You can also use `kubectl` to create the secret directly from the command-line tool:
+
+```bash
+kubectl create secret generic airbyte-config-secrets \
+  --from-literal=DATA_PLANE_CLIENT_ID='' \
+  --from-literal=DATA_PLANE_CLIENT_SECRET='' \
+  --from-literal=azure-blob-store-connection-string='' \
+  --namespace airbyte
+```
+
+</TabItem>
+
 </Tabs>
 </details>
 
 ## 4. Create your deployment values {#step-4}
 
 Add the following overrides to a new `values.yaml` file.
+
+<Tabs>
+<TabItem value="Amazon" label="Amazon" default>
 
 ```yaml title="values.yaml"
 airbyteUrl: https://cloud.airbyte.com # Base URL for the control plane so Airbyte knows where to authenticate
@@ -236,6 +274,40 @@ secretsManager:
     accessKeyIdSecretKey: AWS_SECRET_MANAGER_ACCESS_KEY_ID 
     secretAccessKeySecretKey: AWS_SECRET_MANAGER_SECRET_ACCESS_KEY
 ```
+</TabItem>
+
+<TabItem value="Azure" label="Azure" default>
+
+```yaml title="values.yaml"
+airbyteUrl: https://cloud.airbyte.com # Base URL for the control plane so Airbyte knows where to authenticate
+
+dataPlane:
+  # Used to render the data plane creds secret into the Helm chart.
+  secretName: airbyte-config-secrets
+  id: "preview-data-plane"
+
+  # Describe secret name and key where each of the client ID and secret are stored
+  clientIdSecretName: airbyte-config-secrets
+  clientIdSecretKey: DATA_PLANE_CLIENT_ID
+  clientSecretSecretName: airbyte-config-secrets
+  clientSecretSecretKey: DATA_PLANE_CLIENT_SECRET
+
+# Secret manager secrets/config
+# Must be set to the same secrets manager as the control plane
+secretsManager:
+  secretName: airbyte-config-secrets
+  type: AZURE_KEY_VAULT
+  azureKeyVault:
+      vaultUrl: ## https://my-vault.vault.azure.net/
+      tenantId: ## 3fc863e9-4740-4871-bdd4-456903a04d4e
+      clientId: ""
+      clientIdSecretKey: ""
+      clientSecret: ""
+      clientSecretSecretKey: ""
+```
+</TabItem>
+
+</Tabs>
 
 ## 5. Deploy your data plane {#step-5}
 
