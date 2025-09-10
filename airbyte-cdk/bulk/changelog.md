@@ -1,4 +1,4 @@
-**Load CDK**
+**Bulk CDK**
 
 ## Version 0.1.27
 
@@ -30,7 +30,7 @@
 
 ## Version 0.1.20
 
-* **Changed:** Fix hard failure edge case in stream initialization for in dataflow cdk lifecycle. 
+* **Changed:** Fix hard failure edge case in stream initialization for in dataflow cdk lifecycle.
 
 ## Version 0.1.18
 
