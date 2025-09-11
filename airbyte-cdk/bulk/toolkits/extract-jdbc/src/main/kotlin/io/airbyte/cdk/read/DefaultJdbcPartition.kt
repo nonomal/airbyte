@@ -109,8 +109,8 @@ sealed class DefaultJdbcSplittablePartition(
         val querySpec =
             SelectQuerySpec(
                 SelectColumns(stream.fields + checkpointColumns),
-                FromSample(stream.name, stream.namespace, sampleRateInvPow2, sampleSize),
-                where,
+                FromSample(stream.name, stream.namespace, sampleRateInvPow2, sampleSize, where),
+                NoWhere, // WHERE is already in FromSample, don't duplicate in outer query
                 OrderBy(checkpointColumns),
             )
         return selectQueryGenerator.generate(querySpec.optimize())

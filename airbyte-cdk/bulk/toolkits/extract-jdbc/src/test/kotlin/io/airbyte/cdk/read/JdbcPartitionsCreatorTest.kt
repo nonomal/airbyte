@@ -67,7 +67,8 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 16,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where = Where(And(Or(listOf()), Or(listOf())))
                                     ),
                                     NoWhere,
                                     OrderBy(id)
@@ -83,7 +84,8 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 8,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where = Where(And(Or(listOf()), Or(listOf())))
                                     ),
                                     NoWhere,
                                     OrderBy(id)
@@ -143,9 +145,24 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 16,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where =
+                                            Where(
+                                                And(
+                                                    Or(
+                                                        listOf(
+                                                            And(
+                                                                listOf(
+                                                                    Greater(id, IntCodec.encode(22))
+                                                                )
+                                                            )
+                                                        )
+                                                    ),
+                                                    Or(listOf())
+                                                )
+                                            )
                                     ),
-                                    Where(Greater(id, IntCodec.encode(22))),
+                                    NoWhere,
                                     OrderBy(id)
                                 ),
                             expectedParameters = SelectQuerier.Parameters(fetchSize = null),
@@ -159,9 +176,24 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 8,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where =
+                                            Where(
+                                                And(
+                                                    Or(
+                                                        listOf(
+                                                            And(
+                                                                listOf(
+                                                                    Greater(id, IntCodec.encode(22))
+                                                                )
+                                                            )
+                                                        )
+                                                    ),
+                                                    Or(listOf())
+                                                )
+                                            )
                                     ),
-                                    Where(Greater(id, IntCodec.encode(22))),
+                                    NoWhere,
                                     OrderBy(id)
                                 ),
                             expectedParameters = SelectQuerier.Parameters(fetchSize = null),
@@ -256,9 +288,24 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 16,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where =
+                                            Where(
+                                                And(
+                                                    Or(
+                                                        listOf(
+                                                            And(
+                                                                listOf(
+                                                                    Greater(id, IntCodec.encode(22))
+                                                                )
+                                                            )
+                                                        )
+                                                    ),
+                                                    Or(listOf())
+                                                )
+                                            )
                                     ),
-                                    Where(Greater(id, IntCodec.encode(22))),
+                                    NoWhere,
                                     OrderBy(id)
                                 ),
                             expectedParameters = SelectQuerier.Parameters(fetchSize = null),
@@ -272,9 +319,24 @@ class JdbcPartitionsCreatorTest {
                                         stream().name,
                                         stream().namespace,
                                         sampleRateInvPow2 = 8,
-                                        sampleSize = 4
+                                        sampleSize = 4,
+                                        where =
+                                            Where(
+                                                And(
+                                                    Or(
+                                                        listOf(
+                                                            And(
+                                                                listOf(
+                                                                    Greater(id, IntCodec.encode(22))
+                                                                )
+                                                            )
+                                                        )
+                                                    ),
+                                                    Or(listOf())
+                                                )
+                                            )
                                     ),
-                                    Where(Greater(id, IntCodec.encode(22))),
+                                    NoWhere,
                                     OrderBy(id)
                                 ),
                             expectedParameters = SelectQuerier.Parameters(fetchSize = null),
