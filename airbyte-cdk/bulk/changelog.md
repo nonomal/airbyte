@@ -1,3 +1,15 @@
+## Version 0.1.29
+
+**Load CDK**
+
+* Use correct field name for generation ID meta column.
+
+## Version 0.1.28
+
+**Extract CDK**
+
+* **Changed:** Protobuf encoding fixes to make various types compatible with load(destination) decoding.
+
 **Load CDK**
 
 ## Version 0.1.27
